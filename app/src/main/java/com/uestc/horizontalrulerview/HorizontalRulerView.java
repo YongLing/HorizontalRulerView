@@ -56,6 +56,10 @@ public class HorizontalRulerView extends View {
     private int pointerX;
 
     /**
+     * 指针粗细
+     */
+    private float pointerWidth;
+    /**
      * 刻度顶部线
      */
     private float topLine;
@@ -89,25 +93,26 @@ public class HorizontalRulerView extends View {
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable
                 .HorizontalRulerView);
-        longLine = typedArray.getDimension(R.styleable.HorizontalRulerView_longLine, 120);
-        shortLine = typedArray.getDimension(R.styleable.HorizontalRulerView_shortLine, 80);
-        numSize = typedArray.getDimension(R.styleable.HorizontalRulerView_numSize, 50);
+        longLine = typedArray.getDimension(R.styleable.HorizontalRulerView_longLine, 100);
+        shortLine = typedArray.getDimension(R.styleable.HorizontalRulerView_shortLine, 60);
+        numSize = typedArray.getDimension(R.styleable.HorizontalRulerView_numSize, 40);
         currentNumSize = typedArray.getDimension(R.styleable.HorizontalRulerView_currentNumSize,
-                90);
+                80);
 
         leftSpacing = typedArray.getDimension(R.styleable.HorizontalRulerView_leftSpacing, 40);
         rightSpacing = typedArray.getDimension(R.styleable.HorizontalRulerView_rightSpacing, 40);
 
         count = typedArray.getInt(R.styleable.HorizontalRulerView_count, 20);
         spacing = typedArray.getDimension(R.styleable.HorizontalRulerView_spacing, 40);
-        topLine = typedArray.getDimension(R.styleable.HorizontalRulerView_topLine, 160);
+        topLine = typedArray.getDimension(R.styleable.HorizontalRulerView_topLine, 120);
+        pointerWidth = typedArray.getDimension(R.styleable.HorizontalRulerView_pointerWidth, 10);
 
         lineColor = typedArray.getColor(R.styleable.HorizontalRulerView_lineColor, Color.LTGRAY);
         numColor = typedArray.getColor(R.styleable.HorizontalRulerView_numColor, Color.BLACK);
-        pointerColor = typedArray.getColor(R.styleable.HorizontalRulerView_pointerColor, Color
-                .GREEN);
+        pointerColor = typedArray.getColor(R.styleable.HorizontalRulerView_pointerColor,
+                0xFF4FBA75);
         currentNumColor = typedArray.getColor(R.styleable.HorizontalRulerView_currentNumColor,
-                Color.GREEN);
+                0xFF4FBA75);
 
         if (getBackground() == null) {
             setBackgroundColor(0xFFF6F9F6);
@@ -139,7 +144,7 @@ public class HorizontalRulerView extends View {
         int widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);
         int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
         int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);
-        int minHeight = (int) (topLine + longLine + 150);
+        int minHeight = (int) (topLine + longLine + 120);
         if (heightSpecMode == MeasureSpec.AT_MOST) {
             setMeasuredDimension(widthSpecSize, minHeight);
         } else {
@@ -182,7 +187,7 @@ public class HorizontalRulerView extends View {
         }
         //画指针
         paint.setColor(pointerColor);
-        paint.setStrokeWidth(8);
+        paint.setStrokeWidth(pointerWidth);
         canvas.drawLine(pointerX + getScrollX(), y, pointerX + getScrollX(), y + longLine + 20,
                 paint);
 
@@ -194,7 +199,7 @@ public class HorizontalRulerView extends View {
         canvas.drawText(currentNum, pointerX - textWidth / 2 + getScrollX(), topLine - 40, paint);
 
         //画kg
-        paint.setTextSize(numSize);
+        paint.setTextSize(currentNumSize / 3);
         canvas.drawText("kg", pointerX + textWidth / 2 + getScrollX() + 8, topLine - 80, paint);
 
         super.onDraw(canvas);

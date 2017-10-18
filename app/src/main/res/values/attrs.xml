@@ -10,6 +10,7 @@
         <attr name="count" format="integer" />
         <attr name="spacing" format="dimension" />
         <attr name="topLine" format="dimension" />
+        <attr name="pointerWidth" format="dimension" />
         <attr name="lineColor" format="color" />
         <attr name="numColor" format="color" />
         <attr name="pointerColor" format="color" />
